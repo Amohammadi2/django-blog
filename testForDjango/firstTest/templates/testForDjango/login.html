@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>login form</title>
+    {%load static%}
+    <link rel="stylesheet" href="{%static 'firstTest/css/pro-style.css'%}">
+    <script src="{%static 'firstTest/js/main.js'%}"></script>
+</head>
+<body>
+    <div class="menu">
+        <div class="menu-header">complete the form</div>
+    </div>
+    <div class="main-container">
+        <div class="header">
+            <h1>login to your account</h1>
+            <form id="f" action="{%url 'login'%}" method="post">
+                {%csrf_token%}
+                <label for="id_username" style="margin-bottom: 20px;float:left;">username: </label>{{form.username}}
+                <label for="id_password" style="margin-bottom: 20px;float:left;">password: </label>{{form.password}}
+            </form>
+            <input form="f" type="submit" value="login">
+            <button class="normal-btn" onclick="redirect('/');">cancel</button>
+			<div class="spacer" style="margin-bottom: 300px"> </div>
+        </div>
+    </div>
+</body>
+</html>

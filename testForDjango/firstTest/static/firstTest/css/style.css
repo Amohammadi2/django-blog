@@ -1,0 +1,84 @@
+li{
+    margin-top: 30px;
+}
+ul{
+    color: green;
+}
+a{
+    color: red;
+    text-decoration: none;
+    border-bottom: 3px;
+    transition: all 0.04s ease-in-out;
+    padding-bottom: 10px;
+}
+a:hover{
+    border-bottom: 3px solid rgb(40, 190, 65);
+    color: rgb(40, 190, 65);
+}
+div.spacer{
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+div.header{
+    transition: all .1s ease-in-out;
+}
+div.header:hover{
+    padding-left: 15px;
+    border-left: 60px solid rgb(40, 190, 65);
+    color: rgb(40, 190, 65);
+}
+input[type="text"]{
+    width: 300px;
+    font-size: 18px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: rgb(51, 51, 51);
+    border: 0;
+    border-left: 2px solid rgb(40, 190, 65);
+    padding-left: 5px;
+}
+textarea{    
+    width: 302px;
+    min-height: 98px;
+    max-height: 200px;
+    resize: vertical;
+    font-size: 17px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: rgb(51, 51, 51);
+    border: 0;
+    border-left: 2px solid rgb(40, 190, 65);
+    margin-top: 20px;
+    padding-left: 5px;
+}
+input[type="submit"], button.normal-btn{
+    background-color: rgb(40, 190, 65);
+    color: white;
+    font-size: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding-top: 9px;
+    padding-bottom: 9px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border: 0;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out, box-shadow 0.1s ease-in-out;
+}
+input[type="submit"]:hover, button.normal-btn:hover{
+    background-color: rgb(38, 136, 54);
+    box-shadow: 0px 0px 5px 3px rgb(40, 190, 65);
+}
+.hidden-on-normal{
+    visibility: hidden;
+    font-size: 20px;
+    margin-left: 20px;
+    transition: all .2s ease-in-out;
+    cursor: pointer;
+    color: white;
+    box-shadow: 0px 0px 2px gray;
+}
+.hidden-on-normal:hover{
+    box-shadow: 0px 0px 5px gray;
+}
+li:hover > .hidden-on-normal{
+    visibility: visible;
+    color: rgb(38, 136, 54);
+}

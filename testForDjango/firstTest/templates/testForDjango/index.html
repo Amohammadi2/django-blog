@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en" onload="main();">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>all articles</title>
+    <link rel="stylesheet" 
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    {%load static%}
+    <link rel="stylesheet" href="{%static 'firstTest/css/pro-style.css'%}">
+    <script src="{%static 'firstTest/js/main.js'%}"></script>
+    <script>
+        function main(){
+            add_labels('id_head','enter the subject');
+            add_labels('id_main', 'enter the text ...');
+        }
+    </script>
+    <style>
+        #id_articleMain{
+            width: 90%;
+        }
+    </style>
+</head>
+<body>
+    <div class="menu">
+        <div class="menu-sub-header" style="text-align: right;margin-right:20px;">
+            <span style="float: left;">
+                <form action="{%url 'search'%}" method="get">
+                    <input type="search" name="q" id="q" style="width: 200px;margin-left:5px">
+                    <input type="submit" value="search">
+                </form>
+            </span>
+            {%if user.username%}
+                <span style="margin-right: 20px">hi {{user.first_name}}</span>
+                <button class="normal-btn dark"
+                onclick="redirect('logout/');">logout</button>
+                <button class="normal-btn dark"
+                onclick="redirect('changeProfile');">change profile</button>
+            {%else%}
+                <button class="normal-btn dark"
+                onclick="redirect('login/');">login</button>
+                <button class="normal-btn dark"
+                onclick="redirect('signup/');">sign up</button>
+            {%endif%}
+        </div>
+        <div class="col-3">
+            <div class="paralux2">
+                <div class="float-on-paralux">
+                    <div class="menu-header" style="margin-top: 100px;">welcome to my blog</div>
+                    <div class="menu-sub-header">let's explore this weblog!</div>
+                </div>
+            </div>
+        </div>
+        <div class="menu-sub-header">daily hand writing</div>
+    </div>
+    <div class="main-container" style="margin:0;width: 100%">
+        <div class="col-2">
+            <div class="row-2">
+                <div class="header">
+                    <h1>recently added articles</h1>
+                </div>
+                <div class="main">
+                    <ul>
+                        {%if recent%}
+                            {%for article in recent%}
+                                <li>
+                                    <a href="/want/{{article.id}}">{{article.articleContent}}</a>
+                                </li>
+                            {%endfor%}
+                        {%else%}
+                                <li><a href="">nothing yet!</a></li>
+                        {%endif%}
+                    </ul>
+                </div>
+            </div>
+            <div class="row-2">
+                <div class="header">
+                    <h1 onclick="redirect('/allArticles')" style="cursor: pointer;">all articles</h1>
+                </div>
+                <div class="main">
+                    <ul>
+                    {%if articles%}
+                        {%for article in articles%}
+                            <li>
+                                <a href="/want/{{article.id}}">{{article.articleContent}}</a>
+                            </li>
+                        {%endfor%}
+                    {%else%}
+                            <li><a href="">nothing yet!</a></li>
+                    {%endif%}
+                    </ul>
+                </div>
+            </div>
+            {%if user.username%}
+                <div class="row-2">
+                    <div class="header">
+                        <h1>your articles</h1>
+                    </div>
+                    <div class="main">
+                        <ul>
+                            {%if articles%}
+                                {%for article in articles%}
+                                    <li>
+                                        {%if user.username == article.publisher.username%}
+                                            <span class="material-icons hidden-on-normal"
+                                            onclick="redirect('/deleteArticle/{{article.id}}')">delete</span>
+                                            <span class="material-icons hidden-on-normal"
+                                            onclick="redirect('/editArticle/{{article.id}}')"
+                                            style="margin-right: 10px;">edit</span>
+                                            <a href="/want/{{article.id}}">{{article.articleContent}}</a>
+                                        {%endif%}
+                                    </li>
+                                {%endfor%}
+                            {%else%}
+                                    <li><a href="">nothing yet!</a></li>
+                            {%endif%}
+                        </ul>
+                    </div>
+                </div>
+            {%endif%}
+            <div class="row-2">
+                <div class="header">
+                    <h1>most popular posts</h1>
+                </div>
+                <div class="main">
+                    <ul>
+                        {%for article in popArticles%}
+                            <li>
+                                <span>{{article.likes}} likes</span>
+                                <a href="want/{{article.id}}">{{article.articleContent}}</a>
+                            </li>
+                        {%endfor%}
+                    </ul>
+                </div>
+            </div>
+            {%if user.username%}
+                <div class="row-2">
+                    <div class="header">
+                        <h1>you liked articles</h1>
+                    </div>
+                    <div class="main">
+                        {%for article in user.likerUsers.all%}
+                            <ul>
+                                <li><a href="want/{{article.id}}">{{article.articleContent}}</a></li>
+                            </ul>
+                        {%endfor%}
+                    </div>
+                </div>
+            {%endif%}
+            <div class="row-2">
+                <div class="header">
+                    <h1>add a new article</h1>
+                </div>
+                <div class="main">
+                    {%for f,e in form1.errors.items%}
+                        {%for error in e%}
+                            {{error}}
+                        {%endfor%}
+                    {%endfor%}
+                    {%if user.username%}
+                        <form action="/addArticle/" method="post">
+                            {% csrf_token %}
+                            {{form1.publisher}}
+                            {{form1.articleContent}}<br>
+                            {{form1.articleMain}}<br><br>
+                            <input type="submit" value="add article">
+                        </form>
+                    {%else%}
+                        <p style="width: unset;">
+                            you need to sign in to your account before you add an article
+                            . after that you can even edit and delete the articles. don't you have
+                            an account? so sign up and join us now!<br><br>
+                            <button class="normal-btn" onclick="redirect('login/');">login</button>
+                            <button class="normal-btn" onclick="redirect('signup/');">sign up</button>
+                        </p>
+                    {%endif%}
+                </div>
+            </div>
+        </div>
+        <div class="spacer" style="margin-bottom: 300px;"></div>
+    </div>
+        <footer>
+            <div class="col-3">
+                <div class="row-3">
+                    <div class="row-header">credits:</div>
+                    <div class="row-main">
+                        ashkan mohammadi, the hill boy!
+                    </div>
+                </div>
+                <div class="row-3">
+                    <div class="row-header">hosted by:</div>
+                    <div class="row-main">
+                        ashkan's computer
+                    </div>
+                </div>
+                <div class="row-3">
+                    <div class="row-header">supported by:</div>
+                    <div class="row-main">
+                        my FRIENDS !
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="paralux">
+                    <div class="float-on-paralux">
+                        <div class="menu-header" style="margin-top: 100px;">programming is funny</div>
+                        <div class="menu-sub-header">we are programmers with productive minds</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="row-3">
+                    <div class="row-header">programming language:</div>
+                    <div class="row-main">
+                        we are using python programming language to 
+                        develope this site!
+                    </div>
+                </div>
+                <div class="row-3">
+                    <div class="row-header">used framework:</div>
+                    <div class="row-main">
+                        django is a very powerful python webframework that makes
+                        web develpment easier and for security reasons we use django
+                    </div>
+                </div>
+                <div class="row-3">
+                    <div class="row-header">developer informations:</div>
+                    <div class="row-main">
+                        phone: 09227215691 <br>
+                        email: mohammadiashkan1384@gmail.com
+                    </div>
+                </div>
+            </div>
+        </footer> 
+</body>
+</html>

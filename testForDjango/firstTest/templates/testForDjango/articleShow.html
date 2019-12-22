@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>your wanted article is now ready</title>
+    {%load static%}
+    <link rel="stylesheet" href="{%static 'firstTest/css/pro-style.css'%}">
+    <script src="{%static 'firstTest/js/main.js'%}"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <style>
+        pre,p{
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+    </style>
+    <script>
+        var n = 0
+        function likeup(){
+            $.get("/likeup/{{article.id}}", function(data){
+                console.log(data)
+                $("#l").text("dislike " +data["number_of_likes"]);
+                $("#l").attr("onclick","dislike();");
+                $("#l").attr("class","normal-btn red")
+            })
+        }
+        function dislike(){
+            $.get("/dislike/{{article.id}}", function(data){
+                console.log(data);
+                $("#l").text("like "+data["number_of_likes"])
+                $("#l").attr("onclick","likeup();");
+                $("#l").attr("class","normal-btn blue")
+            })
+        }
+    </script>
+</head>
+<body>
+    <div class="menu">
+        <div class="menu-header">
+            {{article.publisher.first_name}}
+            {{article.publisher.last_name}}
+        </div>
+        <div class="menu-sub-header">
+            {{article.publisher.email}} 
+        </div>
+    </div>
+    <div class="main-container">
+        <div class="header">
+            <h1>{{article.articleContent}}</h1>
+            <button style="font-size:15px" class="normal-btn" onclick="redirect('/');">return to home</button>
+            {%if user not in article.likerUsers.all %}
+                <button class="normal-btn blue" style="font-size: 15px;"
+                onclick="likeup();" id="l">like {{numberoflikes}}</button>
+            {%else%}
+                <button class="normal-btn red" style="font-size: 15px;"
+                onclick="dislike();" id="l">dislike {{numberoflikes}}</button>
+            {%endif%}
+        </div>
+        <div class="main">
+<pre class="article">
+{{article.articleMain}}
+</pre>
+        </div>
+
+        <div class="spacer" style="margin-bottom: 300px;"></div>
+    </div>
+    <div class="reporter" id="special">
+        name: {{article.publisher.first_name}},
+        family: {{article.publisher.last_name}},  
+        email: {{article.publisher.email}}   
+    </div>
+</body>
+</html>

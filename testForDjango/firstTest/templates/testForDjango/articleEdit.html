@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>edit the article</title>
+    {%load static%}
+    <link rel="stylesheet" href="{%static 'firstTest/css/pro-style.css'%}">
+    <script src="{%static 'firstTest/js/main.js'%}"></script>
+</head>
+<body>
+    <div class="menu">
+        <div class="menu-header">news and articles</div>
+        <div class="menu-sub-header">read and learn more with this site</div>
+    </div>
+    <div class="main-container">
+        <div class="header" style="margin-top: 40px;">
+            <h1>edit the article</h1>
+        </div>
+            <form id="f" action="/editArticle/{{art_id}}" method="post">
+                {%csrf_token%}
+                {{form.articleContent}} <br>
+                {{form.articleMain}} <br><br>
+                
+            </form>
+            <input type="submit" value="save" form="f">
+            <button class="normal-btn" onclick="redirect('/')">cancel</button>
+    </div>
+    <div class="spacer" style="margin-bottom: 300px;"></div>
+</body>
+</html>

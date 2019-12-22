@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>sign up form</title>
+    {%load static%}
+    <link rel="stylesheet" href="{%static 'firstTest/css/pro-style.css'%}">
+    <script src="{%static 'firstTest/js/main.js'%}"></script>
+</head>
+<body>
+    <div class="menu">
+        <div class="menu-header">join us!</div>
+        <div class="menu-sub-header">
+            sign up now and use our site
+        </div>
+    </div>
+    <div class="main-container">
+        <div class="header">
+            <h1>complete the form</h1>
+        </div>
+        <form id="f" action="{%url 'signup'%}" method="post">
+            {%csrf_token%}
+            <label for="id_username" style="margin-bottom: 20px;float:left;">username: </label>
+            {{form.username}}
+            <label for="id_password" style="margin-bottom: 20px;float:left;">password:</label>
+            {{form.password}}
+            <label for="id_first_name" style="margin-bottom: 20px;float:left;">first name:</label>
+            {{form.first_name}}
+            <label for="id_last_name" style="margin-bottom: 20px;float:left;">last name:</label>
+            {{form.last_name}}
+            <label for="id_email" style="margin-bottom: 20px;float:left;">email: </label>
+            {{form.email}}
+        </form>
+        <input type="submit" value="sign up" form="f">
+        <button class="normal-btn" onclick="redirect('/');">cancel</button>
+    </div>
+    <div class="space" style="margin-bottom: 300px;"></div>
+</body>
+</html>

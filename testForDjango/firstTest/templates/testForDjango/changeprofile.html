@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>change your profile</title>
+    {%load static%}
+    <link rel="stylesheet" href="{%static 'firstTest/css/pro-style.css'%}">
+    <script src="{%static 'firstTest/js/main.js'%}"></script>
+</head>
+<body>
+    <div class="menu">
+        <div class="menu-header">{{user.first_name}}'s profile</div>
+        <div class="menu-sub-header">
+            change your profile
+        </div>
+    </div>
+    <div class="main-container">
+        <div class="header">
+            <h1>complete your profile form</h1>
+        </div>
+        <img src="{{image_url}}" alt="the image">
+        <form id="f" action="{%url 'changeprofile'%}" method="post" enctype="multipart/form-data">
+            {%csrf_token%}
+            <label for="id_image" style="margin-bottom: 20px;float:left;">profile image: </label>
+            {{form.image}}
+            <label for="id_biography" style="margin-bottom: 20px;float:left;">biography: </label>
+            {{form.biography}}
+            <label for="id_phonenumber" style="margin-bottom: 20px;float:left;">phone number: </label>
+            {{form.phonenumber}}
+            <label for="id_location" style="margin-bottom: 20px;float:left;">location: </label>
+            {{form.location}}
+        </form>
+        <input form="f" type="submit" value="save">
+        <button class="normal-btn" onclick="redirect('/');">cancel</button>
+    </div>
+    <div class="spacer" style="margin-bottom: 300px;"></div>
+</body>
+</html>

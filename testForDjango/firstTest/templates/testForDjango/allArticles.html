@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>all articles</title>
+    {%load static%}
+    <link rel="stylesheet" href="{%static 'firstTest/css/pro-style.css'%}">
+    <script src="{%static 'firstTest/js/main.js'%}"></script>
+</head>
+<body>
+    <div class="menu">
+        <div class="menu-sub-header" style="text-align: right;margin-right:20px;">
+            <span style="float: left;">
+                <form action="{%url 'search'%}" method="get">
+                    <input type="search" name="q" id="q" style="width: 200px;margin-left:5px">
+                    <input type="submit" value="search">
+                </form>
+            </span>
+            {%if user.username%}
+                <span style="margin-right: 20px">hi {{user.first_name}}</span>
+                <button class="normal-btn dark"
+                onclick="redirect('logout/');">logout</button>
+                <button class="normal-btn dark"
+                onclick="redirect('changeProfile');">change profile</button>
+            {%else%}
+                <button class="normal-btn dark"
+                onclick="redirect('login/');">login</button>
+                <button class="normal-btn dark"
+                onclick="redirect('signup/');">sign up</button>
+            {%endif%}
+        </div>
+        <div class="col-3">
+            <div class="paralux2">
+                <div class="float-on-paralux">
+                    <div class="menu-header" style="margin-top: 100px;">welcome to my blog</div>
+                    <div class="menu-sub-header">let's explore this weblog!</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="main-container">
+        <div class="header">
+            <h1>all articles in this site</h1>
+        </div>
+        <div class="main">
+            <ul>
+                {%for article in articles%}
+                    <li><a href="want/{{article.id}}">{{article.articleContent}}</a></li>
+                {%endfor%}
+            </ul>
+        </div>
+        <div class="spacer" style="margin-bottom: 300px;"></div>
+    </div>
+</body>
+</html>
