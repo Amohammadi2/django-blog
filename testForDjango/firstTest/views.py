@@ -248,7 +248,7 @@ def search(request):
 
 def allArticles(request):
     articles = article.objects.all()
-    template = loader.get_template("testfordjango/allArticles.html")
+    template = loader.get_template("testForDjango/allArticles.html")
     context = {
         "user": request.user,
         "articles": articles,
